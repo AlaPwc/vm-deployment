@@ -9,12 +9,18 @@ terraform {
     }
   }
 
+
+
+#test
+
 # 1. Specify the AWS provider and region.
 provider "aws" {
   region = "us-east-1"
   # or any region you prefer
 }
-
+   
+   
+   
 # 2. Create a VPC Security Group to allow SSH/HTTP/HTTPS if needed.
 resource "aws_security_group" "example_sg" {
   name        = "example-security-group"
