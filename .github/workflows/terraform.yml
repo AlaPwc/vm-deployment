@@ -111,3 +111,4 @@ jobs:
     - name: Terraform Apply
           #if: github.event_name == 'push' # Run apply only on push events
       run: terraform apply -input=false -auto-approve
+      working-directory: ./modules/AWS
