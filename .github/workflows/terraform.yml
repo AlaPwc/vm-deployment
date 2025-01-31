@@ -45,15 +45,8 @@
 name: 'Terraform'
 
 on:
-  #push:
-   # branches: [ "main" ]
   pull_request:
   workflow_dispatch:  # REQUIRED for API calls
-   # inputs:
-    #  environment:
-    #    description: "Deployment environment"
-     #   required: true
-     #   default: "staging"
 
 permissions:
   contents: read
