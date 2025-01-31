@@ -45,7 +45,7 @@
 name: 'Terraform'
 
 on:
-  push:
+  #push:
    # branches: [ "main" ]
   pull_request:
   workflow_dispatch:  # REQUIRED for API calls
@@ -109,8 +109,5 @@ jobs:
     - name: Terraform Apply
           #if: github.event_name == 'push' # Run apply only on push events
       run: terraform apply -input=false -auto-approve
-<<<<<<< HEAD
-          #-input=false -auto-approve
-=======
-          #-input=false -auto-approve
->>>>>>> 73508e213248611ec57943e7db093e5f552b20c8
+
+
