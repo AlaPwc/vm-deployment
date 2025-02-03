@@ -2,6 +2,13 @@ provider "azurerm" {
   features {}
 }
 
+# Generate a random pet name
+resource "random_pet" "name" {
+  length = 2
+ 
+}
+
+# Resource Group 
 resource "azurerm_resource_group" "rg" {
   name     = "RGforAla_Eddin_Mahmoud_Shaban"
   location = "Germany West Central"
@@ -10,7 +17,7 @@ resource "azurerm_resource_group" "rg" {
 
 # Create virtual network
 resource "azurerm_virtual_network" "my_terraform_network" {
-  name                = "${random_pet.prefix.id}-vnet"
+  name                = "${random_pet.name.id}-vnet"
   address_space       = ["10.0.0.0/16"]
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
@@ -18,7 +25,7 @@ resource "azurerm_virtual_network" "my_terraform_network" {
 
 # Create subnet
 resource "azurerm_subnet" "my_terraform_subnet" {
-  name                 = "${random_pet.prefix.id}-subnet"
+  name                 = "${random_pet.name.id}-subnet"
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.my_terraform_network.name
   address_prefixes     = ["10.0.1.0/24"]
@@ -26,7 +33,7 @@ resource "azurerm_subnet" "my_terraform_subnet" {
 
 # Create public IPs
 resource "azurerm_public_ip" "my_terraform_public_ip" {
-  name                = "${random_pet.prefix.id}-public-ip"
+  name                = "${random_pet.name.id}-public-ip"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   allocation_method   = "Dynamic"
@@ -34,7 +41,7 @@ resource "azurerm_public_ip" "my_terraform_public_ip" {
 
 # Create Network Security Group and rules
 resource "azurerm_network_security_group" "my_terraform_nsg" {
-  name                = "${random_pet.prefix.id}-nsg"
+  name                = "${random_pet.name.id}-nsg"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
@@ -64,7 +71,7 @@ resource "azurerm_network_security_group" "my_terraform_nsg" {
 
 # Create network interface
 resource "azurerm_network_interface" "my_terraform_nic" {
-  name                = "${random_pet.prefix.id}-nic"
+  name                = "${random_pet.name.id}-nic"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
@@ -94,7 +101,7 @@ resource "azurerm_storage_account" "my_storage_account" {
 
 # Create virtual machine
 resource "azurerm_windows_virtual_machine" "main" {
-  name                  = "${var.prefix}-vm"
+  name                  = "te-vm"
   admin_username        = "azureuser"
   admin_password        = random_password.password.result
   location              = azurerm_resource_group.rg.location
@@ -123,7 +130,7 @@ resource "azurerm_windows_virtual_machine" "main" {
 
 # Install IIS web server to the virtual machine
 resource "azurerm_virtual_machine_extension" "web_server_install" {
-  name                       = "${random_pet.prefix.id}-wsi"
+  name                       = "${random_pet.name.id}-wsi"
   virtual_machine_id         = azurerm_windows_virtual_machine.main.id
   publisher                  = "Microsoft.Compute"
   type                       = "CustomScriptExtension"
@@ -156,8 +163,8 @@ resource "random_password" "password" {
   special     = true
 }
 
-resource "random_pet" "prefix" {
-  prefix = var.prefix
+resource "random_pet" "test" {
+  
   length = 1
 }
 
