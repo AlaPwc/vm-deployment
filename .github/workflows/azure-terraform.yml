@@ -42,7 +42,7 @@
 #       with:
 #         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-name: 'Terraform'
+name: 'Terraform Azure Deployment'
 
 on:
   #push:
@@ -58,10 +58,10 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     env: 
-      azure-client-id: ${{secrets.AZURE_AD_CLIENT_ID}}
-      azure-client-secret: ${{secrets.AZURE_AD_CLIENT_SECRET}}
-      azure-subscription: ${{secrets.AZURE_SUBSCREPTION}}
-      azure-tenant-id: ${{secrets.AZURE_AD_TENENT_ID}}
+      ARM_CLIENT_ID: ${{secrets.AZURE_AD_CLIENT_ID}}
+      ARM_CLIENT_SECRET: ${{secrets.AZURE_AD_CLIENT_SECRET}}
+      ARM_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCREPTION}}
+      ARM_TENANT_ID: ${{secrets.AZURE_AD_TENENT_ID}}
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
