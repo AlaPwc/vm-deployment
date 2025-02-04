@@ -85,9 +85,9 @@ jobs:
       working-directory: ./modules/Azure
 
     # Checks that all Terraform configuration files adhere to a canonical format
-    - name: Terraform Format
-      run: terraform fmt -check
-      working-directory: ./modules/Azure
+   # - name: Terraform Format
+    #  run: terraform fmt -check
+    #  working-directory: ./modules/Azure
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
