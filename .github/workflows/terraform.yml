@@ -108,7 +108,7 @@ jobs:
      # if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
      # run: terraform apply 
 
-    - name: Terraform Apply
-          #if: github.event_name == 'push' # Run apply only on push events
-      run: terraform apply -input=false -auto-approve
-      working-directory: ./modules/AWS
+  #  - name: Terraform Apply
+  #       #if: github.event_name == 'push' # Run apply only on push events
+  #    run: terraform apply -input=false -auto-approve
+  #    working-directory: ./modules/AWS
