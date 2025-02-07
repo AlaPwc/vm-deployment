@@ -7,7 +7,7 @@ resource "random_pet" "prefix" {
 
 # Resource Group 
 resource "azurerm_resource_group" "rg" {
-  name     = "RGforAla_Eddin_Mahmoud_Shaban"
+  name     = "${random_pet.prefix.id}-rg"
   location = "Germany West Central"
 }
 
