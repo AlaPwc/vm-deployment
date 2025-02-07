@@ -43,7 +43,6 @@ resource "azurerm_subnet" "my_terraform_subnet" {
   virtual_network_name = azurerm_virtual_network.my_terraform_network.name
   address_prefixes     = ["10.0.1.0/24"]
     # Attach the correct UDR
-  route_table_id = azurerm_route_table.udr.id
 }
 
 # Create public IPs
