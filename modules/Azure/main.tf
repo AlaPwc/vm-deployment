@@ -19,22 +19,6 @@ resource "azurerm_virtual_network" "my_terraform_network" {
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 }
-resource "azurerm_route_table" "udr" {
-  name                = "${random_pet.prefix.id}-udr"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name  # Use correct RG
-
-  route {
-    name                   = "default-route"
-    address_prefix         = "0.0.0.0/0"
-    next_hop_type          = "VirtualAppliance"
-    next_hop_in_ip_address = "10.0.0.4"  # Ensure this IP is correct
-  }
-
-  tags = {
-    environment = "Production"
-  }
-}
 
 # Create subnet
 resource "azurerm_subnet" "my_terraform_subnet" {
