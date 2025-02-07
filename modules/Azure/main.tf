@@ -6,42 +6,58 @@ resource "random_pet" "prefix" {
 }
 
 # Resource Group 
-resource "azurerm_resource_group" "rg" {
-  name     = "${random_pet.prefix.id}-rg"
-  location = "Germany West Central"
-}
+#resource "azurerm_resource_group" "rg" {
+ # name     = "${random_pet.prefix.id}-rg"
+ # location = "Germany West Central"
+#}
 
 
 # Create virtual network
 resource "azurerm_virtual_network" "my_terraform_network" {
   name                = "${random_pet.prefix.id}-vnet"
   address_space       = ["10.0.0.0/16"]
+  location            = RGforAla_Eddin_Mahmoud_Shaban.rg.location
+  resource_group_name = RGforAla_Eddin_Mahmoud_Shaban.rg.name
+}
+resource "azurerm_route_table" "udr" {
+  name                = "win-vm-iis-bullfrog-udr"
   location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  resource_group_name = "win-vm-iis-bullfrog-rg"
+
+  route {
+    name                   = "default-route"
+    address_prefix         = "0.0.0.0/0"
+    next_hop_type          = "VirtualAppliance"
+    next_hop_in_ip_address = "10.0.0.4"  # Change this to the correct firewall IP
+  }
+
+  tags = {
+    environment = "Production"
+  }
 }
 
 # Create subnet
 resource "azurerm_subnet" "my_terraform_subnet" {
   name                 = "${random_pet.prefix.id}-subnet"
-  resource_group_name  = azurerm_resource_group.rg.name
+  resource_group_name  = RGforAla_Eddin_Mahmoud_Shaban.rg.name
   virtual_network_name = azurerm_virtual_network.my_terraform_network.name
   address_prefixes     = ["10.0.1.0/24"]
-    # Attach the correct UDR
+
 }
 
 # Create public IPs
 resource "azurerm_public_ip" "my_terraform_public_ip" {
   name                = "${random_pet.prefix.id}-public-ip"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = RGforAla_Eddin_Mahmoud_Shaban.rg.location
+  resource_group_name = RGforAla_Eddin_Mahmoud_Shaban.rg.name
   allocation_method   = "Dynamic"
 }
 
 # Create Network Security Group and rules
 resource "azurerm_network_security_group" "my_terraform_nsg" {
   name                = "${random_pet.prefix.id}-nsg"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = RGforAla_Eddin_Mahmoud_Shaban.rg.location
+  resource_group_name = RGforAla_Eddin_Mahmoud_Shaban.rg.name
 
   security_rule {
     name                       = "RDP"
@@ -68,29 +84,11 @@ resource "azurerm_network_security_group" "my_terraform_nsg" {
 }
 
 
-
-resource "azurerm_route_table" "udr" {
-  name                = "win-vm-iis-bullfrog-udr"
-  location            = "East US"  # Adjust this to match your region
-  resource_group_name = "win-vm-iis-bullfrog-rg"
-
-  route {
-    name                   = "default-route"
-    address_prefix         = "0.0.0.0/0"
-    next_hop_type          = "VirtualAppliance"
-    next_hop_in_ip_address = "10.0.0.4"  # Change this to the correct firewall IP
-  }
-
-  tags = {
-    environment = "Production"
-  }
-}
-
 # Create network interface
 resource "azurerm_network_interface" "my_terraform_nic" {
   name                = "${random_pet.prefix.id}-nic"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = RGforAla_Eddin_Mahmoud_Shaban.rg.location
+  resource_group_name = RGforAla_Eddin_Mahmoud_Shaban.rg.name
 
   ip_configuration {
     name                          = "my_nic_configuration"
@@ -109,8 +107,8 @@ resource "azurerm_network_interface_security_group_association" "example" {
 # Create storage account for boot diagnostics
 resource "azurerm_storage_account" "my_storage_account" {
   name                     = "diag${random_id.random_id.hex}"
-  location                 = azurerm_resource_group.rg.location
-  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = RGforAla_Eddin_Mahmoud_Shaban.rg.location
+  resource_group_name      = RGforAla_Eddin_Mahmoud_Shaban.rg.name
   account_tier             = "Standard"
   account_replication_type = "LRS"
 }
@@ -121,8 +119,8 @@ resource "azurerm_windows_virtual_machine" "main" {
   name                  = "te-vm"
   admin_username        = "azureuser"
   admin_password        = random_password.password.result
-  location              = azurerm_resource_group.rg.location
-  resource_group_name   = azurerm_resource_group.rg.name
+  location              = RGforAla_Eddin_Mahmoud_Shaban.rg.location
+  resource_group_name   = RGforAla_Eddin_Mahmoud_Shaban.rg.name
   network_interface_ids = [azurerm_network_interface.my_terraform_nic.id]
   size                  = "Standard_DS1_v2"
 
@@ -165,7 +163,7 @@ resource "azurerm_virtual_machine_extension" "web_server_install" {
 resource "random_id" "random_id" {
   keepers = {
     # Generate a new ID only when a new resource group is defined
-    resource_group = azurerm_resource_group.rg.name
+    resource_group = RGforAla_Eddin_Mahmoud_Shaban.rg.name
   }
 
   byte_length = 8
