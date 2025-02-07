@@ -20,13 +20,34 @@ resource "azurerm_virtual_network" "my_terraform_network" {
   resource_group_name = azurerm_resource_group.rg.name
 }
 
+# create a route table
+resource "azurerm_route_table" "my_route_table" {
+  name                = "${random_pet.prefix.id}-route-table"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+
+  route {
+    name                   = "internet-route"
+    address_prefix         = "0.0.0.0/0"
+    next_hop_type          = "Internet"
+  }
+}
+
+
 # Create subnet
 resource "azurerm_subnet" "my_terraform_subnet" {
   name                 = "${random_pet.prefix.id}-subnet"
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.my_terraform_network.name
   address_prefixes     = ["10.0.1.0/24"]
+
 }
+
+resource "azurerm_subnet_route_table_association" "my_route_table_association" {
+  subnet_id      = azurerm_subnet.my_terraform_subnet.id
+  route_table_id = azurerm_route_table.my_route_table.id
+}
+
 
 # Create public IPs
 resource "azurerm_public_ip" "my_terraform_public_ip" {
