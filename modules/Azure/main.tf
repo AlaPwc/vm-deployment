@@ -19,6 +19,22 @@ resource "azurerm_virtual_network" "my_terraform_network" {
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 }
+resource "azurerm_route_table" "udr" {
+  name                = "${random_pet.prefix.id}-udr"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name  # Use correct RG
+
+  route {
+    name                   = "default-route"
+    address_prefix         = "0.0.0.0/0"
+    next_hop_type          = "VirtualAppliance"
+    next_hop_in_ip_address = "10.0.0.4"  # Ensure this IP is correct
+  }
+
+  tags = {
+    environment = "Production"
+  }
+}
 
 # Create subnet
 resource "azurerm_subnet" "my_terraform_subnet" {
@@ -26,6 +42,8 @@ resource "azurerm_subnet" "my_terraform_subnet" {
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.my_terraform_network.name
   address_prefixes     = ["10.0.1.0/24"]
+    # Attach the correct UDR
+  route_table_id = azurerm_route_table.udr.id
 }
 
 # Create public IPs
@@ -63,6 +81,25 @@ resource "azurerm_network_security_group" "my_terraform_nsg" {
     destination_port_range     = "80"
     source_address_prefix      = "*"
     destination_address_prefix = "*"
+  }
+}
+
+
+
+resource "azurerm_route_table" "udr" {
+  name                = "win-vm-iis-bullfrog-udr"
+  location            = "East US"  # Adjust this to match your region
+  resource_group_name = "win-vm-iis-bullfrog-rg"
+
+  route {
+    name                   = "default-route"
+    address_prefix         = "0.0.0.0/0"
+    next_hop_type          = "VirtualAppliance"
+    next_hop_in_ip_address = "10.0.0.4"  # Change this to the correct firewall IP
+  }
+
+  tags = {
+    environment = "Production"
   }
 }
 
