@@ -66,7 +66,7 @@ resource "aws_security_group" "allow_aurora" {
 }
 
 
-resource "aws_db_subnet_group" "mcloud-showcase-subnet-group" {
+resource "aws_db_subnet_group" "mcloud-showcase-subnet" {
   name       = "mcloud-showcase-subnet-group"
   subnet_ids = [
     data.aws_subnet.subnet1.id,
@@ -86,7 +86,7 @@ resource "aws_rds_cluster" "aurorards" {
   master_username        = "DBtestAdmin"
   master_password        = "AdminTest4321DB"
   vpc_security_group_ids = [aws_security_group.allow_aurora.id]
-  db_subnet_group_name   = aws_db_subnet_group.mcloud-showcase-subnet-group.name
+  db_subnet_group_name   = aws_db_subnet_group.mcloud-showcase-subnet.name
   storage_encrypted      = false
   skip_final_snapshot    = true
   # Multi-AZ
