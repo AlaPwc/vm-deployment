@@ -23,9 +23,15 @@ resource "aws_security_group" "allow_aurora" {
 
 resource "aws_db_subnet_group" "mydb_subnet_group" {
   name       = "mydb-subnet-group"
-  subnet_ids = [
-    data.aws_subnet.subnet1.id,
-    data.aws_subnet.subnet2.id
+#  subnet_ids = [
+#    data.aws_subnet.subnet1.id,
+#    data.aws_subnet.subnet2.id
+#  ]
+
+subnet_ids = [
+    aws_subnet.public_subnet[0].id, 
+    aws_subnet.public_subnet[1].id 
+   # aws_subnet.public_subnet[2].id
   ]
   
   tags = {
