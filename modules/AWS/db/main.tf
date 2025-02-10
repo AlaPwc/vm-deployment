@@ -43,7 +43,7 @@ data "aws_subnet" "subnet2" {
 }
 
 resource "aws_security_group" "allow_aurora" {
-  name        = "Aurora_sg_mcloud_showcase"
+  #name        = "Aurora_sg_mcloud_showcase"
   description = "Security group for RDS Aurora"
   
   ingress {
