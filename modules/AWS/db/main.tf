@@ -11,6 +11,36 @@ terraform {
   }
 }
 
+data "aws_availability_zones" "available" {}
+
+locals {
+  name   = "ex-${basename(path.cwd)}"
+  region = "eu-west-1"
+
+  vpc_cidr = "10.0.0.0/16"
+  azs      = slice(data.aws_availability_zones.available.names, 0, 3)
+
+  tags = {
+    Example    = local.name
+    GithubRepo = "terraform-aws-rds-aurora"
+    GithubOrg  = "terraform-aws-modules"
+  }
+}
+
+module "vpc" {
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "~> 5.0"
+
+  name = local.name
+  cidr = local.vpc_cidr
+
+  azs              = local.azs
+  public_subnets   = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k)]
+  private_subnets  = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k + 3)]
+  database_subnets = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k + 6)]
+
+  tags = local.tags
+}
 
 #test
 
@@ -72,6 +102,8 @@ resource "aws_rds_cluster" "aurorards" {
   db_subnet_group_name   = aws_db_subnet_group.mydb_subnet_group.name
   storage_encrypted      = false
   skip_final_snapshot    = true
+  # Multi-AZ
+  availability_zones        = module.vpc.azs
 }
 
 resource "aws_rds_cluster_instance" "cluster_instances" {
