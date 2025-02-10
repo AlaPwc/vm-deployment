@@ -88,7 +88,8 @@ resource "aws_rds_cluster" "aurorards" {
   storage_encrypted      = false
   skip_final_snapshot    = true
   # Multi-AZ
-  availability_zones        = local.azs
+  # availability_zones        = local.azs
+  availability_zones     = ["${split(",", local.azs)}"]
 }
 
 resource "aws_rds_cluster_instance" "cluster_instances" {
