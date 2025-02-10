@@ -60,7 +60,7 @@ permissions:
 
 jobs:
   terraform:
-    name: 'Terraform'
+    name: 'Terraform_s3'
     runs-on: ubuntu-latest
     environment: production
 
