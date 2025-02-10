@@ -36,10 +36,12 @@ provider "aws" {
 
 data "aws_subnet" "subnet1" {
   id = "subnet-08fbbed3c2ada84b6"
+  availability_zone = "us-east-1a"
 }
 
 data "aws_subnet" "subnet2" {
   id = "subnet-0ac42b550e73cf6b2"
+  availability_zone = "us-east-1b"
 }
 
 resource "aws_security_group" "allow_aurora" {
