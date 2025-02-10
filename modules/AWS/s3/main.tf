@@ -20,10 +20,10 @@ provider "aws" {
 }
 
 
-resource "aws_s3_bucket" "mcloud_showcase" {
-  bucket  = "mcloud_showcase_jean_s3"
+resource "aws_s3_bucket" "mcloud-showcase" {
+  bucket  = "mcloud-showcase-jean-s3"
   tags    = {
-	Name          = "mcloud_showcase_jean"
+	Name          = "mcloud-showcase-jean"
 	Environment    = "Production"
   }
 }
