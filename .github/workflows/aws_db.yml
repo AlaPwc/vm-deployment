@@ -110,4 +110,4 @@ jobs:
 
     - name: Terraform Apply
       run: terraform apply -input=false -auto-approve
-      working-directory: ./modules/AWS/s3
+      working-directory: ./modules/AWS/db
