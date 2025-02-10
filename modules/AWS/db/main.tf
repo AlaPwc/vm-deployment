@@ -27,21 +27,6 @@ locals {
   }
 }
 
-module "vpc" {
-  source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 5.0"
-
-  name = local.name
-  cidr = local.vpc_cidr
-
-  azs              = local.azs
-  public_subnets   = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k)]
-  private_subnets  = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k + 3)]
-  database_subnets = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k + 6)]
-
-  tags = local.tags
-}
-
 #test
 
 # Configure the AWS Provider
@@ -103,7 +88,7 @@ resource "aws_rds_cluster" "aurorards" {
   storage_encrypted      = false
   skip_final_snapshot    = true
   # Multi-AZ
-  availability_zones        = module.vpc.azs
+  availability_zones        = local.azs
 }
 
 resource "aws_rds_cluster_instance" "cluster_instances" {
