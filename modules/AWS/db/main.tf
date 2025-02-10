@@ -17,7 +17,7 @@ locals {
   name   = "ex-${basename(path.cwd)}"
   region = "eu-west-1"
 
-  vpc_cidr = "10.0.0.0/16"
+  vpc_cidr = "172.31.0.0/16"
   azs      = slice(data.aws_availability_zones.available.names, 0, 3)
 
   tags = {
@@ -35,12 +35,12 @@ provider "aws" {
 }
 
 data "aws_subnet" "subnet1" {
-  id = "subnet-08fbbed3c2ada84b6"
+  id = "subnet-098129ea24d210967"
   availability_zone = "eu-central-1a"
 }
 
 data "aws_subnet" "subnet2" {
-  id = "subnet-0ac42b550e73cf6b2"
+  id = "subnet-0988ff95e32c9a763"
   availability_zone = "eu-central-1b"
 }
 
