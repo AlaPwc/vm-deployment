@@ -45,7 +45,7 @@ resource "aws_rds_cluster" "aurorards" {
   cluster_identifier     = "myauroracluster"
   engine                 = "aurora-mysql"
   engine_version         = "5.7.mysql_aurora.2.12.0"
-  database_name          = "MCloud_showcase_db"
+  database_name          = "mcloud-showcase-db"
   master_username        = "DBtestAdmin"
   master_password        = "AdminTest4321DB"
   vpc_security_group_ids = [aws_security_group.allow_aurora.id]
