@@ -91,7 +91,7 @@ resource "aws_rds_cluster" "aurorards" {
   skip_final_snapshot    = true
   # Multi-AZ
   # availability_zones        = local.azs
-  availability_zones     = ["eu-central-1a","eu-central-1b","eu-central-1c"]
+  availability_zones     = ["eu-central-1a","eu-central-1b"]
 }
 
 resource "aws_rds_cluster_instance" "cluster_instances" {
