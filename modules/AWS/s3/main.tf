@@ -24,6 +24,6 @@ resource "aws_s3_bucket" "mcloud_showcase" {
   bucket  = "mcloud_showcase_jean_s3"
   tags    = {
 	Name          = "mcloud_showcase_jean"
-	Environment    = "Dev"
+	Environment    = "Production"
   }
 }
