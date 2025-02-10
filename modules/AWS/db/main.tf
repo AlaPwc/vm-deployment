@@ -1,3 +1,23 @@
+# main.tf
+
+terraform {
+  required_version = ">= 1.3.0"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.0"
+    }
+  }
+}
+
+
+#test
+
+# Configure the AWS Provider
+provider "aws" {
+  region = "eu-central-1"
+}
 
 data "aws_subnet" "subnet1" {
   id = "subnet-08fbbed3c2ada84b6"
