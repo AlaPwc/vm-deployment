@@ -67,7 +67,7 @@ resource "aws_security_group" "allow_aurora" {
 
 
 resource "aws_db_subnet_group" "mcloud-showcase-subnet" {
-  name       = "mcloud-showcase-subnet-group"
+ # name       = "mcloud-showcase-subnet-group"
   subnet_ids = [
     data.aws_subnet.subnet1.id,
     data.aws_subnet.subnet2.id
