@@ -2,8 +2,8 @@ provider "aws" {
   region = "eu-central-1"
 }
 
-resource "aws_lambda_function" "example" {
-  function_name = "ServerlessExample"
+resource "aws_lambda_function" "example-mcloudshowcase" {
+  function_name = "ServerlessExample-mcloudshowcase"
 
   # The bucket name as created earlier with "aws s3api create-bucket"
   s3_bucket = "mcloud-showcase-jean-s3"
@@ -21,7 +21,7 @@ resource "aws_lambda_function" "example" {
 # IAM role which dictates what other AWS services the Lambda function
 # may access.
 resource "aws_iam_role" "lambda_exec" {
-  name = "serverless_example_lambda"
+  name = "serverless_example_lambda-mcloudshowcase"
 
   assume_role_policy = <<EOF
 {
