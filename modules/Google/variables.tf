@@ -1,13 +1,13 @@
 variable "project_id" {
-  description = "GCP Project ID"
+  description = "GCP CloudX Showcase"
 }
 
 variable "region" {
   description = "GCP Region"
-  default     = "us-central1"
+  default     = "europe-west10"
 }
 
 variable "zone" {
   description = "GCP Zone"
-  default     = "us-central1-a"
+  default     = "europe-west10-a"
 }

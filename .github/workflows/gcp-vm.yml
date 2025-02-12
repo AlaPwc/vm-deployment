@@ -29,6 +29,10 @@ jobs:
         run: terraform init
         working-directory: ./modules/Google
 
+      - name: Validate Terraform Configuration  
+        run: terraform validate
+        working-directory: ./modules/Google
+
       - name: Terraform Format Check
         run: terraform fmt -check
         working-directory: ./modules/Google
