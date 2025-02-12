@@ -27,12 +27,16 @@ jobs:
 
       - name: Initialize Terraform
         run: terraform init
+        working-directory: ./modules/Google
 
       - name: Terraform Format Check
         run: terraform fmt -check
+        working-directory: ./modules/Google
 
       - name: Terraform Plan
         run: terraform plan
+        working-directory: ./modules/Google
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
+        working-directory: ./modules/Google
