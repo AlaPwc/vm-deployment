@@ -18,9 +18,10 @@ variable "GOOGLE_CREDENTIALS" {
 }
 
 
-variable "bucket_name" {
-  description = "The globally unique name of the storage bucket"
+variable "bucket_prefix" {
+  description = "Prefix for the bucket name"
   type        = string
+  default     = "cloudx-"
 }
 
 variable "storage_class" {
