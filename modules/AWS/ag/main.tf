@@ -12,4 +12,6 @@ terraform {
 }
 
 variable "lambda_exec" {
+  type    = string
+  default = "example-role"
 }
