@@ -1,4 +1,4 @@
-name: "Terraform Deploy VM on GCP"
+name: "Terraform Deploy Storage on GCP"
 
 on:
   push:
