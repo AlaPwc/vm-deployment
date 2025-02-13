@@ -2,6 +2,8 @@ provider "aws" {
   region = "eu-central-1"
 }
 
+terraform import aws_iam_role.lambda_exec lambda_exec
+
 resource "aws_lambda_function" "example-mcloudshowcase" {
   function_name = "ServerlessExample-mcloudshowcase"
 
@@ -18,27 +20,6 @@ resource "aws_lambda_function" "example-mcloudshowcase" {
   role = "${aws_iam_role.lambda_exec.arn}"
 }
 
-# IAM role which dictates what other AWS services the Lambda function
-# may access.
-resource "aws_iam_role" "lambda_exec" {
-  name = "lambda-mcloudshowcase"
-
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      },
-      "Effect": "Allow",
-      "Sid": ""
-    }
-  ]
-}
-EOF
-}
 
 resource "aws_api_gateway_resource" "proxy" {
   rest_api_id = "${aws_api_gateway_rest_api.example-mcloudshowcase.id}"
