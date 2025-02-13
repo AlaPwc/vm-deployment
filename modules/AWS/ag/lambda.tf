@@ -24,7 +24,7 @@ resource "aws_lambda_function" "example-mcloudshowcase" {
 # may access.
 
 resource "aws_iam_role" "lambda_exec_mcloud_showcase" {
-  name = "lambda-mcloudshowcase"
+ # name = "lambda-mcloudshowcase"
 
   assume_role_policy = <<EOF
 {
