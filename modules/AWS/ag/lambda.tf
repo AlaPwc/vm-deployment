@@ -2,7 +2,7 @@ provider "aws" {
   region = "eu-central-1"
 }
 
-terraform import aws_iam_role.lambda_exec lambda_exec
+# terraform import aws_iam_role.lambda_exec lambda_exec
 
 resource "aws_lambda_function" "example-mcloudshowcase" {
   function_name = "ServerlessExample-mcloudshowcase"
