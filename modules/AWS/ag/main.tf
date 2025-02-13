@@ -10,3 +10,6 @@ terraform {
     }
   }
 }
+
+variable "lambda_exec" {
+}
