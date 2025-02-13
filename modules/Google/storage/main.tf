@@ -1,5 +1,5 @@
 resource "random_id" "bucket_suffix" {
-  byte_length = 4  # Generates a random suffix
+  byte_length = 4 # Generates a random suffix
 }
 
 provider "google" {
