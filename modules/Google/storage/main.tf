@@ -8,7 +8,7 @@ resource "google_storage_bucket" "my_bucket" {
   name          = var.bucket_name
   location      = var.region
   storage_class = var.storage_class
-  force_destroy = true  # Set to false to prevent accidental deletion
+  force_destroy = true # Set to false to prevent accidental deletion
 
   versioning {
     enabled = true
@@ -19,11 +19,11 @@ resource "google_storage_bucket" "my_bucket" {
       type = "Delete"
     }
     condition {
-      age = 365  # Auto-delete objects older than 1 year
+      age = 365 # Auto-delete objects older than 1 year
     }
   }
 
-  uniform_bucket_level_access = true  # Recommended for security
+  uniform_bucket_level_access = true # Recommended for security
 
   labels = {
     environment = "dev"

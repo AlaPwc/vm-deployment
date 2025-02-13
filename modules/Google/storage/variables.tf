@@ -26,5 +26,5 @@ variable "bucket_name" {
 variable "storage_class" {
   description = "Storage class of the bucket"
   type        = string
-  default     = "STANDARD"  # Options: MULTI_REGIONAL, REGIONAL, NEARLINE, COLDLINE, ARCHIVE
+  default     = "STANDARD" # Options: MULTI_REGIONAL, REGIONAL, NEARLINE, COLDLINE, ARCHIVE
 }
