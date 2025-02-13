@@ -16,15 +16,3 @@ variable "GOOGLE_CREDENTIALS" {
   type        = string
   default     = "" # Provide an empty default value since this will be overridden by the environment variable
 }
-
-
-variable "bucket_name" {
-  description = "The globally unique name of the storage bucket"
-  type        = string
-}
-
-variable "storage_class" {
-  description = "Storage class of the bucket"
-  type        = string
-  default     = "STANDARD"  # Options: MULTI_REGIONAL, REGIONAL, NEARLINE, COLDLINE, ARCHIVE
-}

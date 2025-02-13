@@ -4,29 +4,28 @@ provider "google" {
   region  = var.region
 }
 
-resource "google_storage_bucket" "my_bucket" {
-  name          = var.bucket_name
-  location      = var.region
-  storage_class = var.storage_class
-  force_destroy = true  # Set to false to prevent accidental deletion
+resource "google_compute_instance" "vm_instance" {
+  name         = "terraform-github-action-vm"
+  machine_type = "e2-micro"
+  zone         = var.zone
 
-  versioning {
-    enabled = true
-  }
-
-  lifecycle_rule {
-    action {
-      type = "Delete"
-    }
-    condition {
-      age = 365  # Auto-delete objects older than 1 year
+  boot_disk {
+    initialize_params {
+      image = "projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20250130" # Free-tier eligible image
     }
   }
 
-  uniform_bucket_level_access = true  # Recommended for security
+  network_interface {
+    network = "default"
+    access_config {
+      // Ephemeral public IP
+    }
+  }
 
-  labels = {
-    environment = "dev"
-    owner       = "terraform"
+  metadata = {
+    startup-script = <<-EOT
+      #!/bin/bash
+      echo "Hello, Terraform from GitHub Actions!" > /var/www/html/index.html
+    EOT
   }
 }
