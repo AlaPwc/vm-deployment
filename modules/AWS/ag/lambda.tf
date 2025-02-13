@@ -17,7 +17,7 @@ resource "aws_lambda_function" "example-mcloudshowcase" {
   handler = "main.handler"
   runtime = "nodejs10.x"
 
-  role = "${aws_iam_role.lambda_exec.arn}"
+ # role = "${aws_iam_role.lambda_exec.arn}"
 }
 
 
