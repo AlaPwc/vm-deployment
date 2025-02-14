@@ -6,7 +6,7 @@ provider "google" {
 
 # Generate a unique random suffix for the DB instance name
 resource "random_id" "db_suffix" {
-  byte_length = 2  # Generates a small random hex value
+  byte_length = 2 # Generates a small random hex value
 }
 
 # Generate a timestamp
