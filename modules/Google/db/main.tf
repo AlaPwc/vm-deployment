@@ -4,9 +4,16 @@ provider "google" {
   region  = var.region
 }
 
+# Generate a unique random suffix for the DB instance name
+resource "random_id" "db_suffix" {
+  byte_length = 2  # Generates a small random hex value
+}
+
+# Generate a timestamp
+resource "time_static" "timestamp" {}
 
 resource "google_sql_database_instance" "db_instance" {
-  name             = var.db_instance_name
+  name             = "${var.db_instance_prefix}-${formatdate("YYYYMMDD", time_static.timestamp.rfc3339)}-${random_id.db_suffix.hex}"
   region           = var.region
   database_version = var.db_version
 

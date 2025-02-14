@@ -18,7 +18,7 @@ variable "GOOGLE_CREDENTIALS" {
 }
 
 
-variable "db_instance_name" {
+variable "db_instance_prefix" {
   description = "Cloud SQL instance name"
   type        = string
   default     = "my-cloud-sql-instance"
