@@ -27,13 +27,13 @@ variable "db_instance_name" {
 variable "db_version" {
   description = "Database engine and version"
   type        = string
-  default     = "POSTGRES_15"  # Change to MYSQL_8_0 for MySQL
+  default     = "POSTGRES_15" # Change to MYSQL_8_0 for MySQL
 }
 
 variable "db_tier" {
   description = "Machine type for the database"
   type        = string
-  default     = "db-f1-micro"  # Cheapest option (for testing)
+  default     = "db-f1-micro" # Cheapest option (for testing)
 }
 
 variable "db_name" {

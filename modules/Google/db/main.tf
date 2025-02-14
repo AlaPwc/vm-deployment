@@ -11,8 +11,8 @@ resource "google_sql_database_instance" "db_instance" {
   database_version = var.db_version
 
   settings {
-    tier = var.db_tier  # Machine type for the database
-    availability_type = "ZONAL"  # Change to "REGIONAL" for high availability
+    tier              = var.db_tier # Machine type for the database
+    availability_type = "ZONAL"     # Change to "REGIONAL" for high availability
 
     backup_configuration {
       enabled            = true
@@ -20,15 +20,15 @@ resource "google_sql_database_instance" "db_instance" {
     }
 
     ip_configuration {
-      ipv4_enabled = true  # Set to false if using private IP only
+      ipv4_enabled = true # Set to false if using private IP only
       authorized_networks {
         name  = "allow-all"
-        value = "0.0.0.0/0"  # WARNING: Open to all. Restrict in production.
+        value = "0.0.0.0/0" # WARNING: Open to all. Restrict in production.
       }
     }
   }
 
-  deletion_protection = false  # Change to true to prevent accidental deletion
+  deletion_protection = false # Change to true to prevent accidental deletion
 }
 
 resource "google_sql_user" "db_user" {
