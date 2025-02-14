@@ -1,0 +1,50 @@
+name: "Terraform Deploy Database on GCP"
+
+on:
+  push:
+    branches:
+      - google
+  pull_request:
+
+jobs:
+  terraform:
+    name: "Terraform Apply"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.0
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+
+      - name: Initialize Terraform
+        run: terraform init
+        working-directory: ./modules/Google/db
+
+      - name: Validate Terraform Configuration  
+        run: terraform validate
+        working-directory: ./modules/Google/db
+
+      - name: Terraform Format Check
+        run: terraform fmt -check
+        working-directory: ./modules/Google/db
+
+      - name: Terraform Plan
+        run: terraform plan -var="project_id=${{ secrets.GCP_PROJECT_ID }}"
+        working-directory: ./modules/Google/db
+# Need to uncomment the code hier in order to deploy the resources 
+      #- name: Terraform Apply
+      #  run:  terraform apply -auto-approve -var="project_id=${{ secrets.GCP_PROJECT_ID }}"
+      #  working-directory: ./modules/Google/db
+
+     # - name: Get Output (Bucket URL)
+      #  run: terraform output bucket_url
+      #  working-directory: ./modules/Google/db
