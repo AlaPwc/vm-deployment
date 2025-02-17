@@ -1,8 +1,9 @@
-resource "aws_s3_bucket" "bucket-1" {
+resource "aws_s3_bucket" "bucket-mcloud-showcase" {
   bucket = "www.${var.bucket_name}"
 }
+
 data "aws_s3_bucket" "selected-bucket" {
-  bucket = aws_s3_bucket.bucket-1.bucket
+  bucket = aws_s3_bucket.mcloud-showcase.bucket
 }
 
 resource "aws_s3_bucket_acl" "bucket-acl" {
@@ -17,7 +18,6 @@ resource "aws_s3_bucket_versioning" "versioning_example" {
     status = "Enabled"
   }
 }
-
 
 resource "aws_s3_bucket_ownership_controls" "s3_bucket_acl_ownership" {
   bucket = data.aws_s3_bucket.selected-bucket.id
@@ -40,6 +40,7 @@ resource "aws_s3_bucket_policy" "bucket-policy" {
   bucket = data.aws_s3_bucket.selected-bucket.id
   policy = data.aws_iam_policy_document.iam-policy-1.json
 }
+
 data "aws_iam_policy_document" "iam-policy-1" {
   statement {
     sid    = "AllowPublicRead"
@@ -64,7 +65,7 @@ index_document {
     suffix = "index.html"
   }
 error_document {
-    key = "404.jpeg"
+    key = "error.html"
   }
 # IF you want to use the routing rule
 routing_rule {
@@ -86,13 +87,5 @@ resource "aws_s3_object" "object-upload-html" {
     etag            = filemd5("uploads/${each.value}")
     acl             = "public-read"
 }
-resource "aws_s3_object" "object-upload-jpg" {
-    for_each        = fileset("uploads/", "*.jpeg")
-    bucket          = data.aws_s3_bucket.selected-bucket.bucket
-    key             = each.value
-    source          = "uploads/${each.value}"
-    content_type    = "image/jpeg"
-    etag            = filemd5("uploads/${each.value}")
-    acl             = "public-read"
-}
+
 
