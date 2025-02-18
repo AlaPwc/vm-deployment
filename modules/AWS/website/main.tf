@@ -52,8 +52,8 @@ data "aws_iam_policy_document" "iam-policy-mcloud-showcase" {
     sid    = "AllowPublicRead"
     effect = "Allow"
 resources = [
-      "arn:aws:s3:::${var.bucket_name}",
-      "arn:aws:s3:::${var.bucket_name}/*",
+      "arn:aws:s3:::${var.bucket_name}-${random_uuid.uuid.result}",
+      "arn:aws:s3:::${var.bucket_name}-${random_uuid.uuid.result}/*",
     ]
 actions = [
                 "s3:GetObject",
