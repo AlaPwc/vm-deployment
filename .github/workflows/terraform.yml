@@ -44,7 +44,7 @@ jobs:
         run: |
           mkfifo tf_logs 
           tail -f tf_logs | while read line; do
-            curl -X POST "https://your-backend-server.com/logs" \
+            curl -X POST "https://postman-echo.com/post" \
                  -H "Content-Type: application/json" \
                  -d "{\"log\": \"$line\"}" &
           done &
