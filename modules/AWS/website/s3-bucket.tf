@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "bucket-mcloud-showcase" {
-  bucket = "www.${var.bucket_name}"
+  bucket = "${var.bucket_name}"
 }
 
 data "aws_s3_bucket" "selected-bucket" {
