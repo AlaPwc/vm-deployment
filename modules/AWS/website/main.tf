@@ -16,5 +16,4 @@ provider "aws" {
   region = "eu-central-1"
 }
 
-domain_name = "mcloud-showcase.com"
-bucket_name = "mcloud-showcase-bucket"
+
