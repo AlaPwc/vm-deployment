@@ -18,6 +18,7 @@ provider "aws" {
 
 resource "aws_s3_bucket" "bucket-mcloud-showcase" {
   bucket = "${var.bucket_name}"
+  region = "eu-central-1"
 }
 
 data "aws_s3_bucket" "selected-bucket" {
