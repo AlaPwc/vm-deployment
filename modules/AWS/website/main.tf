@@ -24,12 +24,6 @@ data "aws_s3_bucket" "selected-bucket" {
   bucket = aws_s3_bucket.bucket-mcloud-showcase.bucket
 }
 
-resource "aws_s3_bucket_acl" "bucket-acl" {
-  bucket = data.aws_s3_bucket.selected-bucket.id
-  acl    = "public-read"
-  depends_on = [aws_s3_bucket_ownership_controls.s3_bucket_acl_ownership-mcloud-showcase]
-}
-
 resource "aws_s3_bucket_versioning" "versioning_mcloud-showcase" {
   bucket = data.aws_s3_bucket.selected-bucket.id
   versioning_configuration {
@@ -72,7 +66,6 @@ principals {
 
   depends_on = [aws_s3_bucket_public_access_block.mcloud-showcase]
 }
-
 
 resource "aws_s3_bucket_ownership_controls" "s3_bucket_acl_ownership-mcloud-showcase" {
   bucket = data.aws_s3_bucket.selected-bucket.id
