@@ -108,6 +108,6 @@ jobs:
      # if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
      # run: terraform apply 
 
-    - name: Terraform Apply
-      run: terraform apply -input=false -auto-approve
-      working-directory: ./modules/AWS/s3
+   # - name: Terraform Apply
+     # run: terraform apply -input=false -auto-approve
+   #   working-directory: ./modules/AWS/s3
