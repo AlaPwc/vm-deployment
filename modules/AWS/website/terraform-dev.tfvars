@@ -1,2 +1,2 @@
-domain_name = "example.com"
-bucket_name = "example.com"
+domain_name = "mcloud-showcase.com"
+bucket_name = "mcloud-showcase-bucket"
