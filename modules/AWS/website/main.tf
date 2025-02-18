@@ -50,7 +50,20 @@ resources = [
       "arn:aws:s3:::${var.bucket_name}",
       "arn:aws:s3:::${var.bucket_name}/*",
     ]
-actions = ["S3:GetObject"]
+actions = [
+                "s3:GetObject",
+                "s3:PutObject",
+                "s3:ListBucket",
+                "s3:DeleteObject",
+                "s3:DeleteObjectVersion",
+                "s3:RestoreObject",
+                "s3:ListBucketVersions",
+                "s3:ListMultipartUploadParts",
+                "s3:GetObjectAttributes",
+                "s3:GetObjectVersion",
+                "s3:PutObjectAcl",
+                "s3:GetObjectAcl"
+            ]
 principals {
       type        = "*"
       identifiers = ["*"]
