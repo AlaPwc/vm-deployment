@@ -20,8 +20,23 @@ resource "aws_s3_bucket" "bucket-mcloud-showcase" {
   bucket = "${var.bucket_name}"
 }
 
+resource "aws_s3_bucket" "bucket-mcloud-showcase" {
+  bucket = "${var.bucket_name}-${random_uuid.uuid.result}"
+}
+
+resource "random_uuid" "uuid" {}
+
 data "aws_s3_bucket" "selected-bucket" {
   bucket = aws_s3_bucket.bucket-mcloud-showcase.bucket
+}
+
+resource "aws_s3_bucket_public_access_block" "mcloud-showcase" {
+  bucket = data.aws_s3_bucket.selected-bucket.id
+
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
 }
 
 resource "aws_s3_bucket_versioning" "versioning_mcloud-showcase" {
@@ -64,16 +79,7 @@ principals {
     }
   }
 
-  depends_on = [aws_s3_bucket_public_access_block.mcloud-showcase]
-}
-
-resource "aws_s3_bucket_public_access_block" "mcloud-showcase" {
-  bucket = data.aws_s3_bucket.selected-bucket.id
-
-  block_public_acls       = false
-  block_public_policy     = false
-  ignore_public_acls      = false
-  restrict_public_buckets = false
+  #depends_on = [aws_s3_bucket_public_access_block.mcloud-showcase]
 }
 
 resource "aws_s3_bucket_website_configuration" "website-config" {
@@ -102,7 +108,7 @@ resource "aws_s3_object" "object-upload-html" {
     source          = "./${each.value}"
     content_type    = "text/html"
     etag            = filemd5("./${each.value}")
-    acl             = "public-read"
+    #acl             = "public-read"
 }
 
 
