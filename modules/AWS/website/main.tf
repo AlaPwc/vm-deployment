@@ -17,10 +17,6 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "bucket-mcloud-showcase" {
-  bucket = "${var.bucket_name}"
-}
-
-resource "aws_s3_bucket" "bucket-mcloud-showcase" {
   bucket = "${var.bucket_name}-${random_uuid.uuid.result}"
 }
 
