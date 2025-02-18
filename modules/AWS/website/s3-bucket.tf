@@ -9,25 +9,25 @@ data "aws_s3_bucket" "selected-bucket" {
 resource "aws_s3_bucket_acl" "bucket-acl" {
   bucket = data.aws_s3_bucket.selected-bucket.id
   acl    = "public-read"
-  depends_on = [aws_s3_bucket_ownership_controls.s3_bucket_acl_ownership]
+  depends_on = [aws_s3_bucket_ownership_controls.s3_bucket_acl_ownership-mcloud-showcase]
 }
 
-resource "aws_s3_bucket_versioning" "versioning_example" {
+resource "aws_s3_bucket_versioning" "versioning_mcloud-showcase" {
   bucket = data.aws_s3_bucket.selected-bucket.id
   versioning_configuration {
     status = "Enabled"
   }
 }
 
-resource "aws_s3_bucket_ownership_controls" "s3_bucket_acl_ownership" {
+resource "aws_s3_bucket_ownership_controls" "s3_bucket_acl_ownership-mcloud-showcase" {
   bucket = data.aws_s3_bucket.selected-bucket.id
   rule {
     object_ownership = "BucketOwnerPreferred"
   }
-  depends_on = [aws_s3_bucket_public_access_block.example]
+  depends_on = [aws_s3_bucket_public_access_block.mcloud-showcase]
 }
 
-resource "aws_s3_bucket_public_access_block" "example" {
+resource "aws_s3_bucket_public_access_block" "mcloud-showcase" {
   bucket = data.aws_s3_bucket.selected-bucket.id
 
   block_public_acls       = false
@@ -36,12 +36,12 @@ resource "aws_s3_bucket_public_access_block" "example" {
   restrict_public_buckets = false
 }
 
-resource "aws_s3_bucket_policy" "bucket-policy" {
+resource "aws_s3_bucket_policy" "bucket-policy-mcloud-showcase" {
   bucket = data.aws_s3_bucket.selected-bucket.id
-  policy = data.aws_iam_policy_document.iam-policy-1.json
+  policy = data.aws_iam_policy_document.iam-policy-mcloud-showcase.json
 }
 
-data "aws_iam_policy_document" "iam-policy-1" {
+data "aws_iam_policy_document" "iam-policy-mcloud-showcase" {
   statement {
     sid    = "AllowPublicRead"
     effect = "Allow"
@@ -56,7 +56,7 @@ principals {
     }
   }
 
-  depends_on = [aws_s3_bucket_public_access_block.example]
+  depends_on = [aws_s3_bucket_public_access_block.mcloud-showcase]
 }
 
 resource "aws_s3_bucket_website_configuration" "website-config" {
