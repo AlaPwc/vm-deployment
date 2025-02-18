@@ -101,7 +101,7 @@ resource "aws_s3_object" "object-upload-html" {
     for_each        = fileset("./", "*.html")
     bucket          = data.aws_s3_bucket.selected-bucket.bucket
     key             = each.value
-    source          = "uploads/${each.value}"
+    source          = "./${each.value}"
     content_type    = "text/html"
     etag            = filemd5("./${each.value}")
     acl             = "public-read"
