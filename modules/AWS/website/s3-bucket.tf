@@ -3,7 +3,7 @@ resource "aws_s3_bucket" "bucket-mcloud-showcase" {
 }
 
 data "aws_s3_bucket" "selected-bucket" {
-  bucket = aws_s3_bucket.mcloud-showcase.bucket
+  bucket = aws_s3_bucket.bucket-mcloud-showcase.bucket
 }
 
 resource "aws_s3_bucket_acl" "bucket-acl" {
