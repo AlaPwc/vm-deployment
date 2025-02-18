@@ -80,6 +80,8 @@ jobs:
       with:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
+
+
     # Configure AWS credentials
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v2
@@ -88,6 +90,10 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: eu-central-1 
   
+    - name: Print Branch Name
+      run: echo "Deploying from branch ${{ github.ref }}"
+
+      
     - name: Stream Logs to API
       run: |
       mkfifo tf_logs  # Create a named pipe
