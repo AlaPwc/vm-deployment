@@ -45,9 +45,7 @@
 name: 'Terraform'
 
 on:
-  push:
-   # branches: [ "main" ]
-  pull_request:
+
   workflow_dispatch:  # REQUIRED for API calls
    # inputs:
     #  environment:
@@ -93,20 +91,18 @@ jobs:
     - name: Print Branch Name
       run: echo "Deploying from branch ${{ github.ref }}"
 
-      
+
     - name: Stream Logs to API
       run: |
       mkfifo tf_logs  # Create a named pipe
       tail -f tf_logs | while read line; do
         curl -X POST "https://your-backend-server.com/logs" \
               -H "Content-Type: application/json" \
-              -d "{\"log\": \"$line\"}" &
-      done &
+              -d "{\"log\": \"$line\"}" & done &
 
       terraform init -no-color 2>&1 | tee tf_logs
       terraform plan -no-color 2>&1 | tee -a tf_logs
 
-    #terraform apply -auto-approve -no-color 2>&1 | tee -a tf_logs
 
     working-directory: ./modules/AWS  # ✅ Set Terraform to run in ./modules/AWS
 
