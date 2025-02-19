@@ -59,4 +59,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: tf-output
-          path:  outputs.json
+          path: ./modules/Google/storage/outputs.json
+
