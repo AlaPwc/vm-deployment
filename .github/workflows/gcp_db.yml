@@ -1,11 +1,8 @@
 name: "Terraform Deploy Database on GCP"
 
 on:
-  push:
-    branches:
-      - google
-  pull_request:
-
+  workflow_dispatch:  # REQUIRED for API calls
+  
 jobs:
   terraform:
     name: "Terraform Apply"
@@ -40,6 +37,7 @@ jobs:
       - name: Terraform Plan
         run: terraform plan -var="project_id=${{ secrets.GCP_PROJECT_ID }}"
         working-directory: ./modules/Google/db
+
 # Need to uncomment the code hier in order to deploy the resources 
       - name: Terraform Apply
         run:  terraform apply -auto-approve -var="project_id=${{ secrets.GCP_PROJECT_ID }}"

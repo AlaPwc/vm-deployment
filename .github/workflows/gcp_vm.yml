@@ -1,10 +1,7 @@
 name: "Terraform Deploy VM on GCP"
 
 on:
-  push:
-    branches:
-      - google
-  pull_request:
+  workflow_dispatch:  # REQUIRED for API calls
 
 jobs:
   terraform:
@@ -44,10 +41,10 @@ jobs:
       - name: Terraform Plan
         run: terraform plan -var="project_id=${{ secrets.GCP_PROJECT_ID }}"
         working-directory: ./modules/Google
-
-      #- name: Terraform Apply
-      #  run:  terraform apply -auto-approve -var="project_id=${{ secrets.GCP_PROJECT_ID }}"
-      #  working-directory: ./modules/Google/vm
+      # Need to uncomment the code hier in order to deploy the resources 
+      - name: Terraform Apply
+        run:  terraform apply -auto-approve -var="project_id=${{ secrets.GCP_PROJECT_ID }}"
+        working-directory: ./modules/Google/vm
 
       - name: Get Output (VM IP)
         run: terraform output vm_public_ip
