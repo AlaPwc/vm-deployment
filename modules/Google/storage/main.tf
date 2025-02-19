@@ -7,9 +7,12 @@ provider "google" {
   project = var.project_id
   region  = var.region
 }
+# Generate a timestamp
+resource "time_static" "timestamp" {}
+
 
 resource "google_storage_bucket" "my_bucket" {
-  name          = "${var.bucket_prefix}-${random_id.bucket_suffix.hex}"
+  name          = "${var.bucket_prefix}-${formatdate("YYYYMMDD", time_static.timestamp.rfc3339)}-${random_id.bucket_suffix.hex}"
   location      = var.region
   storage_class = var.storage_class
   force_destroy = true # Set to false to prevent accidental deletion

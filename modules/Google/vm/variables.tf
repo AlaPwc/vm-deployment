@@ -16,3 +16,9 @@ variable "GOOGLE_CREDENTIALS" {
   type        = string
   default     = "" # Provide an empty default value since this will be overridden by the environment variable
 }
+
+variable "vm_instance_prefix" {
+  description = "VM instance name"
+  type        = string
+  default     = "my-vm-instance"
+}
