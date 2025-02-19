@@ -1,4 +1,4 @@
-# main.tf
+2# main.tf
 
 terraform {
   required_version = ">= 1.3.0"
@@ -20,21 +20,16 @@ provider "aws" {
 }
 
 
-
-
 # Create an EC2 Instance
-resource "aws_instance" "example_ec2" {
+resource "aws_instance" "ec2-mcloud-showcase-instance" {
   ami           = "ami-0cdd6d7420844683b"  # Amazon Linux 2 AMI (us-east-1). Update as needed.
   instance_type = "t2.micro"
 
-  # Optionally, specify an existing key pair for SSH access
-  # key_name = "your-existing-key-pair"
-
-  # Optionally, specify security groups or VPC settings
-  # vpc_security_group_ids = ["sg-12345678"]
-  # subnet_id              = "subnet-abc12345"
-
   tags = {
-    Name = "example-ec2"
+    Name = "${var.ec2_name}-${random_uuid.uuid.result}"
   }
 }
+
+resource "random_uuid" "uuid" {}
+
+
