@@ -74,15 +74,15 @@ resource "aws_db_subnet_group" "mcloud-showcase-subnet" {
   ]
   
   tags = {
-    Name = "MyDBSubnetGroup"
+    Name = "mcloudshowcasedbsubgroup-${random_uuid.uuid.result}"
   }
 }
 
 resource "aws_rds_cluster" "aurorards" {
-  cluster_identifier     = "myauroracluster"
+  cluster_identifier     = "${var.cluster_name}-${random_uuid.uuid.result}"
   engine                 = "aurora-mysql"
   engine_version         = "5.7.mysql_aurora.2.12.0"
-  database_name          = "mcloudshowcasedb"
+  database_name          = "mcloudshowcasedb-${random_uuid.uuid.result}"
   master_username        = "DBtestAdmin"
   master_password        = "AdminTest4321DB"
   vpc_security_group_ids = [aws_security_group.allow_aurora.id]
@@ -95,7 +95,7 @@ resource "aws_rds_cluster" "aurorards" {
 }
 
 resource "aws_rds_cluster_instance" "cluster_instances" {
-  identifier          = "muaurorainstance"
+  identifier          = "${var.cluster_instance_name}-${random_uuid.uuid.result}"
   cluster_identifier  = aws_rds_cluster.aurorards.id
   instance_class      = "db.t3.small"
   engine              = aws_rds_cluster.aurorards.engine
@@ -103,4 +103,5 @@ resource "aws_rds_cluster_instance" "cluster_instances" {
   publicly_accessible = true
 }
 
+resource "random_uuid" "uuid" {}
 
