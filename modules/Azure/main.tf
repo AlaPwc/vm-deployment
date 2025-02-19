@@ -22,15 +22,15 @@ resource "azurerm_virtual_network" "my_terraform_network" {
 
 # create a route table
 #resource "azurerm_route_table" "my_route_table" {
- # name                = "${random_pet.prefix.id}-route-table"
- # location            = azurerm_resource_group.rg.location
- # resource_group_name = azurerm_resource_group.rg.name
+# name                = "${random_pet.prefix.id}-route-table"
+# location            = azurerm_resource_group.rg.location
+# resource_group_name = azurerm_resource_group.rg.name
 
- # route {
-  #  name                   = "internet-route"
-  #  address_prefix         = "0.0.0.0/0"
-  #  next_hop_type          = "Internet"
- # }
+# route {
+#  name                   = "internet-route"
+#  address_prefix         = "0.0.0.0/0"
+#  next_hop_type          = "Internet"
+# }
 #}
 
 
@@ -44,7 +44,7 @@ resource "azurerm_subnet" "my_terraform_subnet" {
 }
 
 #resource "azurerm_subnet_route_table_association" "my_route_table_association" {
- # subnet_id      = azurerm_subnet.my_terraform_subnet.id
+# subnet_id      = azurerm_subnet.my_terraform_subnet.id
 #  route_table_id = azurerm_route_table.my_route_table.id
 #}
 

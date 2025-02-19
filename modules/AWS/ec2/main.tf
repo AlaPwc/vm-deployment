@@ -21,7 +21,7 @@ provider "aws" {
 
 # Create an EC2 Instance
 resource "aws_instance" "ec2-mcloud-showcase-instance" {
-  ami           = "ami-0cdd6d7420844683b"  # Amazon Linux 2 AMI (us-east-1). Update as needed.
+  ami           = "ami-0cdd6d7420844683b" # Amazon Linux 2 AMI (us-east-1). Update as needed.
   instance_type = "t2.micro"
 
   tags = {

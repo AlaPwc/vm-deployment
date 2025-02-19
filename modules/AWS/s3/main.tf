@@ -52,15 +52,15 @@ data "aws_iam_policy_document" "s3-iam-policy-mcloud-showcase" {
   statement {
     sid    = "AllowPublicRead"
     effect = "Allow"
-resources = [
+    resources = [
       "arn:aws:s3:::${var.bucket_name}-${random_uuid.uuid.result}",
       "arn:aws:s3:::${var.bucket_name}-${random_uuid.uuid.result}/*",
     ]
-actions = [
-                "s3:GetObject",
-                "s3:ListBucket"
-            ]
-principals {
+    actions = [
+      "s3:GetObject",
+      "s3:ListBucket"
+    ]
+    principals {
       type        = "*"
       identifiers = ["*"]
     }

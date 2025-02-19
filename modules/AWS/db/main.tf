@@ -35,19 +35,19 @@ provider "aws" {
 }
 
 data "aws_subnet" "subnet1" {
-  id = "subnet-098129ea24d210967"
+  id                = "subnet-098129ea24d210967"
   availability_zone = "eu-central-1a"
 }
 
 data "aws_subnet" "subnet2" {
-  id = "subnet-0988ff95e32c9a763"
+  id                = "subnet-0988ff95e32c9a763"
   availability_zone = "eu-central-1b"
 }
 
 resource "aws_security_group" "allow_aurora" {
   #name        = "Aurora_sg_mcloud_showcase"
   description = "Security group for RDS Aurora"
-  
+
   ingress {
     description = "MYSQL/Aurora"
     from_port   = 3306
@@ -55,7 +55,7 @@ resource "aws_security_group" "allow_aurora" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  
+
   egress {
     from_port        = 0
     to_port          = 0
@@ -67,12 +67,12 @@ resource "aws_security_group" "allow_aurora" {
 
 
 resource "aws_db_subnet_group" "mcloud-showcase-subnet" {
- # name       = "mcloud-showcase-subnet-group"
+  # name       = "mcloud-showcase-subnet-group"
   subnet_ids = [
     data.aws_subnet.subnet1.id,
     data.aws_subnet.subnet2.id
   ]
-  
+
   tags = {
     Name = "mcloudshowcasedbsubgroup-${random_uuid.uuid.result}"
   }
@@ -91,7 +91,7 @@ resource "aws_rds_cluster" "aurorards" {
   skip_final_snapshot    = true
   # Multi-AZ
   # availability_zones        = local.azs
-  availability_zones     = ["eu-central-1a","eu-central-1b"]
+  availability_zones = ["eu-central-1a", "eu-central-1b"]
 }
 
 resource "aws_rds_cluster_instance" "cluster_instances" {

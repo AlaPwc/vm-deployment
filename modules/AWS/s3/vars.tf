@@ -1,6 +1,6 @@
 
 variable "bucket_name" {
-  type = string
+  type        = string
   description = "Name of the bucket"
-  default = "s3-mcloud-showcase-bucket"
+  default     = "s3-mcloud-showcase-bucket"
 }

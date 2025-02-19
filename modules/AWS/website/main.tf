@@ -51,25 +51,25 @@ data "aws_iam_policy_document" "iam-policy-mcloud-showcase" {
   statement {
     sid    = "AllowPublicRead"
     effect = "Allow"
-resources = [
+    resources = [
       "arn:aws:s3:::${var.bucket_name}-${random_uuid.uuid.result}",
       "arn:aws:s3:::${var.bucket_name}-${random_uuid.uuid.result}/*",
     ]
-actions = [
-                "s3:GetObject",
-                "s3:PutObject",
-                "s3:ListBucket",
-                "s3:DeleteObject",
-                "s3:DeleteObjectVersion",
-                "s3:RestoreObject",
-                "s3:ListBucketVersions",
-                "s3:ListMultipartUploadParts",
-                "s3:GetObjectAttributes",
-                "s3:GetObjectVersion",
-                "s3:PutObjectAcl",
-                "s3:GetObjectAcl"
-            ]
-principals {
+    actions = [
+      "s3:GetObject",
+      "s3:PutObject",
+      "s3:ListBucket",
+      "s3:DeleteObject",
+      "s3:DeleteObjectVersion",
+      "s3:RestoreObject",
+      "s3:ListBucketVersions",
+      "s3:ListMultipartUploadParts",
+      "s3:GetObjectAttributes",
+      "s3:GetObjectVersion",
+      "s3:PutObjectAcl",
+      "s3:GetObjectAcl"
+    ]
+    principals {
       type        = "*"
       identifiers = ["*"]
     }
@@ -80,14 +80,14 @@ principals {
 
 resource "aws_s3_bucket_website_configuration" "website-config" {
   bucket = data.aws_s3_bucket.selected-bucket.bucket
-index_document {
+  index_document {
     suffix = "index.html"
   }
-error_document {
+  error_document {
     key = "error.html"
   }
-# IF you want to use the routing rule
-routing_rule {
+  # IF you want to use the routing rule
+  routing_rule {
     condition {
       key_prefix_equals = "/abc"
     }
@@ -98,13 +98,13 @@ routing_rule {
 }
 
 resource "aws_s3_object" "object-upload-html" {
-    for_each        = fileset("./", "*.html")
-    bucket          = data.aws_s3_bucket.selected-bucket.bucket
-    key             = each.value
-    source          = "./${each.value}"
-    content_type    = "text/html"
-    etag            = filemd5("./${each.value}")
-    #acl             = "public-read"
+  for_each     = fileset("./", "*.html")
+  bucket       = data.aws_s3_bucket.selected-bucket.bucket
+  key          = each.value
+  source       = "./${each.value}"
+  content_type = "text/html"
+  etag         = filemd5("./${each.value}")
+  #acl             = "public-read"
 }
 
 

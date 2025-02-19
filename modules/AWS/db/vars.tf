@@ -1,11 +1,11 @@
 variable "cluster_name" {
-  type = string
+  type        = string
   description = "Name of the Aurora Cluster"
-  default = "Aurora-mcloud-showcase-cluster"
+  default     = "Aurora-mcloud-showcase-cluster"
 }
 
 variable "cluster_instance_name" {
-  type = string
+  type        = string
   description = "Name of the Aurora Cluster Instance"
-  default = "Aurora-mcloud-showcase-cluster-instance"
+  default     = "Aurora-mcloud-showcase-cluster-instance"
 }

@@ -1,12 +1,12 @@
 variable "domain_name" {
-  type = string
+  type        = string
   description = "Name of the domain"
-  default = "mcloud-showcase"
+  default     = "mcloud-showcase"
 }
 
 variable "bucket_name" {
-  type = string
+  type        = string
   description = "Name of the bucket"
-  default = "mcloud-showcase-bucket"
+  default     = "mcloud-showcase-bucket"
 }
 
