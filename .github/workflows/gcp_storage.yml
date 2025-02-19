@@ -53,21 +53,10 @@ jobs:
       - name: Get Output (Bucket URL)
         run: terraform output bucket_url
         working-directory: ./modules/Google/storage
-      - name: Get Terraform Outputs
-        id: get_outputs
-        run: |
-          TF_OUTPUT_JSON=$(terraform output -json)
-          # Option 1: Print to logs:
-          echo "$TF_OUTPUT_JSON"
-          
-          # Option 2: Save to an environment variable for potential use in subsequent steps
-          echo "TF_OUTPUT_JSON=$TF_OUTPUT_JSON" >> $GITHUB_ENV
-          
-          # Option 3: Create a file that we can upload as an artifact
-          echo "$TF_OUTPUT_JSON" > tf_output.json
+
 
       - name: Upload Terraform Outputs (Artifact)
         uses: actions/upload-artifact@v4
         with:
           name: tf-output
-          path: tf_output.json
+          path:  outputs.json
