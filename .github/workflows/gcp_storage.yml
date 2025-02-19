@@ -43,11 +43,13 @@ jobs:
         working-directory: ./modules/Google/storage
 # Need to uncomment the code hier in order to deploy the resources 
       - name: Terraform Apply
-        run:  terraform apply -auto-approve -var="project_id=${{ secrets.GCP_PROJECT_ID }}"  terraform output -json > outputs.json
-       
+        run:  terraform apply -auto-approve -var="project_id=${{ secrets.GCP_PROJECT_ID }}"  
         working-directory: ./modules/Google/storage
 
-      
+      - name: Write Terraform Outputs to JSON
+        run: terraform output -json > outputs.json
+        working-directory: ./modules/Google/storage
+
       - name: Get Output (Bucket URL)
         run: terraform output bucket_url
         working-directory: ./modules/Google/storage
